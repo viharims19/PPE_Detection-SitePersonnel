@@ -1,0 +1,5 @@
+train: /content/drive/MyDrive/ComputerVision/pdsp/train.txt
+val: /content/drive/MyDrive/ComputerVision/pdsp/val.txt
+
+nc: 5
+names: ['Helmet','Goggles','Jacket','Gloves','Footwear']
