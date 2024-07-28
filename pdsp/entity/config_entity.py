@@ -26,7 +26,7 @@ class DataIngestionConfig:
     S3_DATA_NAME = DATA_INGESTION_S3_DATA_NAME
 
 
-"""
+
 @dataclass
 class DataValidationConfig:
     data_validation_dir: str = os.path.join(
@@ -38,7 +38,7 @@ class DataValidationConfig:
     required_file_list = DATA_VALIDATION_ALL_REQUIRED_FILES
 
 
-
+"""
 
 @dataclass
 class ModelTrainerConfig:

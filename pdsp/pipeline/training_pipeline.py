@@ -3,20 +3,22 @@ from pdsp.logger import logging
 from pdsp.exception import pdspException
 from pdsp.configuration.s3_operations import S3Operation
 from pdsp.components.data_ingestion import DataIngestion
-"""from pdsp.components.data_validation import DataValidation
+from pdsp.components.data_validation import DataValidation
+"""
 from pdsp.components.model_trainer import ModelTrainer
 from pdsp.components.model_pusher import ModelPusher"""
 
 
-from pdsp.entity.config_entity import (DataIngestionConfig)
+from pdsp.entity.config_entity import (DataIngestionConfig,
+                                       DataValidationConfig)
 """
-                                    DataValidationConfig,
                                       ModelTrainerConfig,
                                       ModelPusherConfig) """
 
 
-from pdsp.entity.artifacts_entity import (DataIngestionArtifact)
-"""                                         DataValidationArtifact,
+from pdsp.entity.artifacts_entity import (DataIngestionArtifact,
+                                         DataValidationArtifact)
+"""
                                          ModelTrainerArtifact,
                                          ModelPusherArtifacts) """
 
@@ -24,8 +26,8 @@ from pdsp.entity.artifacts_entity import (DataIngestionArtifact)
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
-        """
         self.data_validation_config = DataValidationConfig()
+        """
         self.model_trainer_config = ModelTrainerConfig()
         self.model_pusher_config = ModelPusherConfig()
         """
@@ -57,7 +59,7 @@ class TrainPipeline:
         
 
     
-    """
+    
     def start_data_validation(
         self, data_ingestion_artifact: DataIngestionArtifact
     ) -> DataValidationArtifact:
@@ -82,7 +84,7 @@ class TrainPipeline:
         except Exception as e:
             raise pdspException(e, sys) from e
         
-
+    """
     
     def start_model_trainer(self
     ) -> ModelTrainerArtifact:
@@ -119,13 +121,14 @@ class TrainPipeline:
     def run_pipeline(self) -> None:
         try:
             data_ingestion_artifact = self.start_data_ingestion()
+            data_validation_artifact = self.start_data_validation(
+                data_ingestion_artifact=data_ingestion_artifact
+            )
 
         except Exception as e:
             raise pdspException(e, sys)
         
-        """    data_validation_artifact = self.start_data_validation(
-                data_ingestion_artifact=data_ingestion_artifact
-            )
+        """
             if data_validation_artifact.validation_status == True:
                 model_trainer_artifact = self.start_model_trainer()
                 model_pusher_artifact = self.start_model_pusher(model_trainer_artifact=model_trainer_artifact,s3=self.s3_operations)
