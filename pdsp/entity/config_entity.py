@@ -38,7 +38,6 @@ class DataValidationConfig:
     required_file_list = DATA_VALIDATION_ALL_REQUIRED_FILES
 
 
-"""
 
 @dataclass
 class ModelTrainerConfig:
@@ -52,7 +51,7 @@ class ModelTrainerConfig:
 
     batch_size = MODEL_TRAINER_BATCH_SIZE
 
-
+"""
 
 @dataclass
 class ModelPusherConfig:

@@ -4,22 +4,22 @@ from pdsp.exception import pdspException
 from pdsp.configuration.s3_operations import S3Operation
 from pdsp.components.data_ingestion import DataIngestion
 from pdsp.components.data_validation import DataValidation
-"""
 from pdsp.components.model_trainer import ModelTrainer
+"""
 from pdsp.components.model_pusher import ModelPusher"""
 
 
 from pdsp.entity.config_entity import (DataIngestionConfig,
-                                       DataValidationConfig)
+                                       DataValidationConfig,
+                                      ModelTrainerConfig)
 """
-                                      ModelTrainerConfig,
                                       ModelPusherConfig) """
 
 
 from pdsp.entity.artifacts_entity import (DataIngestionArtifact,
-                                         DataValidationArtifact)
+                                         DataValidationArtifact,
+                                         ModelTrainerArtifact)
 """
-                                         ModelTrainerArtifact,
                                          ModelPusherArtifacts) """
 
 
@@ -27,8 +27,8 @@ class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
-        """
         self.model_trainer_config = ModelTrainerConfig()
+        """
         self.model_pusher_config = ModelPusherConfig()
         """
         self.s3_operations = S3Operation()
@@ -84,7 +84,6 @@ class TrainPipeline:
         except Exception as e:
             raise pdspException(e, sys) from e
         
-    """
     
     def start_model_trainer(self
     ) -> ModelTrainerArtifact:
@@ -99,7 +98,7 @@ class TrainPipeline:
             raise pdspException(e, sys)
         
 
-    
+    """
 
     def start_model_pusher(self, model_trainer_artifact: ModelTrainerArtifact, s3: S3Operation):
 
@@ -125,14 +124,16 @@ class TrainPipeline:
                 data_ingestion_artifact=data_ingestion_artifact
             )
 
-        except Exception as e:
-            raise pdspException(e, sys)
+
         
-        """
+        
             if data_validation_artifact.validation_status == True:
                 model_trainer_artifact = self.start_model_trainer()
-                model_pusher_artifact = self.start_model_pusher(model_trainer_artifact=model_trainer_artifact,s3=self.s3_operations)
+            #   model_pusher_artifact = self.start_model_pusher(model_trainer_artifact=model_trainer_artifact,s3=self.s3_operations)
             
             else:
                 raise Exception("Your data is not in correct format")
-        """
+            
+        except Exception as e:
+            raise pdspException(e, sys)
+        
