@@ -5,22 +5,19 @@ from pdsp.configuration.s3_operations import S3Operation
 from pdsp.components.data_ingestion import DataIngestion
 from pdsp.components.data_validation import DataValidation
 from pdsp.components.model_trainer import ModelTrainer
-"""
-from pdsp.components.model_pusher import ModelPusher"""
+from pdsp.components.model_pusher import ModelPusher
 
 
 from pdsp.entity.config_entity import (DataIngestionConfig,
                                        DataValidationConfig,
-                                      ModelTrainerConfig)
-"""
-                                      ModelPusherConfig) """
+                                      ModelTrainerConfig,
+                                      ModelPusherConfig)
 
 
 from pdsp.entity.artifacts_entity import (DataIngestionArtifact,
                                          DataValidationArtifact,
-                                         ModelTrainerArtifact)
-"""
-                                         ModelPusherArtifacts) """
+                                         ModelTrainerArtifact,
+                                         ModelPusherArtifacts)
 
 
 class TrainPipeline:
@@ -28,9 +25,7 @@ class TrainPipeline:
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
         self.model_trainer_config = ModelTrainerConfig()
-        """
         self.model_pusher_config = ModelPusherConfig()
-        """
         self.s3_operations = S3Operation()
 
 
@@ -98,7 +93,7 @@ class TrainPipeline:
             raise pdspException(e, sys)
         
 
-    """
+   
 
     def start_model_pusher(self, model_trainer_artifact: ModelTrainerArtifact, s3: S3Operation):
 
@@ -115,7 +110,7 @@ class TrainPipeline:
             raise pdspException(e, sys)
         
 
-    """
+   
 
     def run_pipeline(self) -> None:
         try:
@@ -129,7 +124,7 @@ class TrainPipeline:
         
             if data_validation_artifact.validation_status == True:
                 model_trainer_artifact = self.start_model_trainer()
-            #   model_pusher_artifact = self.start_model_pusher(model_trainer_artifact=model_trainer_artifact,s3=self.s3_operations)
+                model_pusher_artifact = self.start_model_pusher(model_trainer_artifact=model_trainer_artifact,s3=self.s3_operations)
             
             else:
                 raise Exception("Your data is not in correct format")
